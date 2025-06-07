@@ -7,9 +7,9 @@ Latex template for graduation thesis at University of Engineering and Technology
 - Auto numbering of pages, chapters, sections, and subsections.
 - Automatic table of contents.
 - Automatic list of figures and tables.
-- List of terms
-- Citing references
-- Support for Vietnamese language
+- List of terms.
+- Citing references.
+- Support for Vietnamese language.
 
 
 ### How to use
@@ -18,6 +18,8 @@ Latex template for graduation thesis at University of Engineering and Technology
 3. Upload the downloaded zip file to your Overleaf project.
 4. Open `main.tex` file and compile the project.
 5. Edit files to complete your thesis.
+
+![Demo](/assets/how-to-use.gif)
 
 
 ### References
