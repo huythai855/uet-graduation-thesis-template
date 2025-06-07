@@ -1,0 +1,382 @@
+\clearpage
+\phantomsection
+
+\setcounter{chapter}{3}
+\chapter[{TÊN CHƯƠNG 4}]{Tên chương 4}
+
+% Sau khi hoàn tất quá trình phân tích và thiết kế hệ thống, chương 4 sẽ trình bày quá trình cấu hình, cài đặt và kiểm thử các tính năng của hệ thống theo kiến trúc đã đề ra. Hệ thống đã được đóng gói dưới dạng image, người dùng có thể sử dụng ứng dụng Docker để cài đặt hệ thống trên máy chủ tại chỗ của tổ chức, doanh nghiệp.
+
+% \section{Cài đặt hệ thống}
+
+% Để cài đặt hệ thống ServeFlow, người dùng cần chuẩn bị một máy chủ với các thông số tối thiểu như sau:
+% \renewcommand{\labelitemi}{$-$}
+% \begin{itemize}
+%     \item \textit{CPU}: tối thiểu 4 lõi.
+%     \item \textit{RAM}: tối thiểu 8 GB.
+%     \item \textit{Ổ cứng}: dung lượng còn trống tối thiểu 20 GB.
+% 	\item \textit{Hệ điều hành}: từ Ubuntu 20.04 trở lên
+% \end{itemize} 
+% \vspace{0.3cm}
+
+% Người dùng thực hiện lần lượt các bước sau:
+
+% \subsection{Cài đặt Docker}
+% Cập nhật danh sách gói cài đặt:
+
+% \begin{lstlisting}[language=bash, basicstyle=\ttfamily\small, backgroundcolor=\color{gray!10}]
+% 	sudo apt update
+% \end{lstlisting}
+
+
+% Cài đặt ứng dụng docker:
+% \begin{lstlisting}[language=bash, basicstyle=\ttfamily\small, backgroundcolor=\color{gray!10}]
+% 	sudo apt install docker.io -y
+% \end{lstlisting}
+
+% Khởi chạy ứng dụng docker:
+% \begin{lstlisting}[language=bash, basicstyle=\ttfamily\small, backgroundcolor=\color{gray!10}]
+% 	sudo systemctl start docker
+% 	sudo systemctl enable docker
+% \end{lstlisting}
+
+% Kiểm tra Docker đã được cài đặt:
+% \begin{lstlisting}[language=bash, basicstyle=\ttfamily\small, backgroundcolor=\color{gray!10}]
+% 	docker --version
+% \end{lstlisting}
+
+% \subsection{Tải về image ServeFlow}
+% Image khởi chạy của ServeFlow đã được cập nhật trên kho lữu trữ Docker Hub. Người dùng sử dụng lệnh sau để tải về:
+% \begin{lstlisting}[language=bash, basicstyle=\ttfamily\small, backgroundcolor=\color{gray!10}]
+% 	docker pull huythai855/serveflow:latest
+% \end{lstlisting}
+
+
+% \subsection{Chạy container ServeFlow}
+% Sau khi đã tải về image của ServeFlow, người dùng có thể chạy container với các biến môi trường và cấu hình cổng như sau:
+% \begin{lstlisting}[language=bash, basicstyle=\ttfamily\small, backgroundcolor=\color{gray!10}]
+% 	docker run -d \
+% 	--name serveflow \
+% 	-p 8000:8000 \
+% 	-e MONGO_URI="mongodb://<mongo_host>:<port>" 
+% 	-e POSTGRES_URI="postgresql://<host>:<port>/<db>" 
+% 	-e REDIS_URL="redis://<host>:<port>"
+% 	huythai855/serveflow:latest
+% \end{lstlisting}
+
+% Trong đó:
+% \renewcommand{\labelitemi}{$-$}
+% \begin{itemize}
+% 	\item \textit{MONGO\_URI}: là thông tin kết nối đến MongoDB, ví dụ: mongodb://localhost:27017.
+% 	\item \textit{POSTGRES\_URI}: là thông tin kết nối đến PostgreSQL, ví dụ: postgresql://localhost:5432.
+% 	\item \textit{REDIS\_URL}: là thông tin kết nối đến Redis, ví dụ: redis://localhost:6379.
+% \end{itemize}
+
+% Sau khi container đã được khởi chạy, người dùng có thể truy cập vào địa chỉ \textit{http://localhost:8000} để sử dụng hệ thống ServeFlow.
+
+% \vspace{0.5cm}
+
+% \section{Hệ thống triển khai và quản lý mô hình ServeFlow}
+
+% \subsection{Đăng nhập}
+
+% Khi truy cập vào hệ thống, nếu kiểm tra người dùng chưa đăng nhập, hệ thống sẽ ngay lập tức chuyển hướng người dùng về trang Login. Tại đây, ở lần đầu đăng nhập, người dùng sử dụng tài khoản quản trị viên đã cấu hình khi cài đặt hệ thống để đăng nhập. Đây là tài khoản quản trị viên duy nhất, tài khoản này có mọi quyền thêm, sửa, xóa, cập nhật các mô hình và có quyền tạo mới hoặc xóa các tài khoản của những người dùng khác trong hệ thống.
+
+% \begin{figure} [!htb]
+% 	\centering
+% 	\includegraphics[width=1\linewidth]{figures/gd_login.png}
+% 	\caption{Giao diện đăng nhập tài khoản của hệ thống}
+% 	\label{fig:RelationalDatabaseDiagram}
+% \end{figure}
+
+% \FloatBarrier
+
+
+
+% \subsection{Trang chủ}
+
+% Ngay sau khi đăng nhập, người dùng sẽ được chuyển hướng về trang chủ. Tại đây, hệ thống sẽ hiển thị các thông tin tổng quan nhất của hệ thống, bao gồm số lượng triển khai đang ở mỗi trạng thái, số lượng cụm đang kết nối, tổng quan số tài nguyên đang sử dụng. Từ đó, người dùng hệ thống có thể dễ dàng nắm bắt các thông tin một cách nhanh chóng.
+
+% \begin{figure} [!htb]
+% 	\centering
+% 	% \rotatebox{90}{
+%     %     \includegraphics[width=1.5\linewidth]{figures/image29.png}
+%     % }
+% 	\includegraphics[width=1\linewidth]{figures/gd_dashboard.png}
+
+% 	\caption{Giao diện trang chủ của hệ thống}
+% 	\label{fig:RelationalDatabaseDiagram}
+% \end{figure}
+
+% \FloatBarrier
+
+
+
+
+
+% \subsection{Cảnh báo}
+
+% Với ServeFlow, người dùng có thể cùng lúc đăng ký nhiều cụm máy chủ Kubernetes vào cùng một lúc, do đó lượng hạ tầng cần quản lý là rất nhiều. Hệ thống sẽ liên tục thu thập và giám sát thông tin về trạng thái tài nguyên, hiệu năng hoạt động và các lỗi phát sinh từ các cụm được kết nối khi phát hiện những dấu hiệu bất thường như:
+
+% \renewcommand{\labelitemi}{$-$}
+% \begin{itemize}
+%     \item Cụm Kubernetes bị mất kết nối hoặc gặp sự cố xác thực.
+%     \item Tình trạng tài nguyên ở các cụm vượt quá mức cấu hình.
+%     \item Các deployment khi khởi tạo bị treo hoặc khởi động lại liên tục.
+% \end{itemize} 
+% \vspace{0.3cm}
+
+
+% Khi đó, hệ thống sẽ tự động sinh các cảnh báo và ghi lại vào cơ sở dữ liệu MongoDB thực hiện việc tra cứu cũng như ngay lập tức hiển thị ở mục Cảnh báo (Alerts) cho người dùng, giúp quản trị viên hệ thống ngay lập tức có phương án điều chỉnh, xử lý sự cố ngay lập tức.
+
+
+% \begin{figure} [!htb]
+% 	\centering
+% 	% \rotatebox{90}{
+%     %     \includegraphics[width=1.5\linewidth]{figures/image3.png}
+%     % }
+% 	\includegraphics[width=\linewidth]{figures/gd_alerts.png}
+% 	\caption{Giao diện trang cảnh báo của hệ thống}
+% 	\label{fig:RelationalDatabaseDiagram}
+% \end{figure}
+
+% \FloatBarrier
+
+
+
+
+
+
+% \subsection{Nhật ký hoạt động}
+
+% Tính năng nhật ký hoạt động (Activity Log) trong ServeFlow cho phép theo dõi toàn bộ hoạt động của người dùng trong hệ thống theo thời gian thực. Do hệ thống có rất nhiều người dùng, dùng cùng một thời điểm, đây là công cụ quan trọng giúp quản trị viên giám sát, kiểm tra và truy vết các thay đổi ảnh hưởng đến hệ thống triển khai mô hình.
+
+
+% Tính năng nhật ký hoạt động hỗ trợ:
+% \renewcommand{\labelitemi}{$-$}
+% \begin{itemize}
+%     \item Đảm bảo tính minh bạch và trách nhiệm khi vận hành.
+%     \item Dễ dàng truy vết nguyên nhân sự cố khi xảy ra lỗi.
+%     \item Phân tích hành vi sử dụng hệ thống và phát hiện bất thường.
+% \end{itemize} 
+% \vspace{0.3cm}
+
+
+% \begin{figure} [!htb]
+% 	\centering
+% 	% \rotatebox{90}{
+%     %     \includegraphics[width=1.5\linewidth]{figures/image12.png}
+%     % }
+% 	\includegraphics[width=1\linewidth]{figures/gd_activity_logs.png}
+% 	\caption{Giao diện trang nhật ký hoạt động của hệ thống}
+% 	\label{fig:RelationalDatabaseDiagram}
+% \end{figure}
+
+% \FloatBarrier
+
+
+
+% \subsection{Kho lưu trữ mẫu triển khai mô hình}
+
+% ServeFlow cung cấp tính năng Model Template - một kho lưu trữ các mẫu triển khai mô hình được dựng sẵn (build-in). Đây là danh sách các mô hình phổ biến cho từng bài toán. Người dùng có thể tìm kiếm mô hình theo bài toán mình đang cần sử dụng, xem các thông tin mô tả, thông số, các ca sử dụng tốt nhất,... từ đó lựa chọn được mô hình phù hợp nhất để sử dụng. Các mẫu triển khai (template) đều đã có sẵn các bộ thông số triển khai, giúp người dùng khi đã chọn lựa được mô hình phù hợp với bài toán của mình, có thể ngay lập tức lựa chọn cụm Kubernetes và triển khai ngay lập tức.
+
+
+% \begin{figure} [!htb]
+% 	\centering
+% 	\includegraphics[width=1\linewidth]{figures/gd_model_template2.png}
+% 	\caption{Giao diện kho lưu trữ mẫu triển khai mô hình của hệ thống.}
+% 	\label{fig:RelationalDatabaseDiagram}
+% \end{figure}
+
+% \FloatBarrier
+
+% \begin{figure} [!htb]
+% 	\centering
+% 	\includegraphics[width=1\linewidth]{figures/gd_model_template_detail2.png}
+% 	\caption{Giao diện xem chi tiết mẫu triển khai mô hình của hệ thống.}
+% 	\label{fig:RelationalDatabaseDiagram}
+% \end{figure}
+
+% \FloatBarrier
+
+
+
+% \subsection{Quản lý người dùng}
+
+% Tính năng quản lý người dùng (User Management) của ServeFlow cho phép quản trị viên thêm, bớt, sửa xóa toàn bộ danh sách người dùng trong hệ thống, giúp đảm bảo bảo mật và phân quyền truy cập rõ ràng giữa các thành viên. Như đã đề cập ở phần 3.4. Tầng giao diện, người dùng hệ thống được phân thành ba nhóm vai trò: Admin, User và Observer. Mỗi nhóm vai trò sẽ có các quyền truy cập và thao tác khác nhau trong hệ thống.
+
+% ServeFlow được xây dựng với mong muốn cung cấp một hệ thống triển khai và quản lý mô hình học máy toàn diện dành cho các nhóm nghiên cứu và doanh nghiệp. Không chỉ hỗ trợ triển khai mô hình trên hạ tầng cụm Kubernetes một cách đơn giản, ServeFlow còn nổi bật với khả năng quản trị, phân quyền người dùng rõ ràng và trực quan, tính năng mà mà nhiều giải pháp hiện tại như Triton Inference Server, Kubeflow và MLflow chưa đáp ứng và tối ưu tốt cho môi trường làm việc nhóm.
+
+
+% \begin{figure} [!htb]
+% 	\centering
+% 	% \rotatebox{90}{
+%     %     \includegraphics[width=1.5\linewidth]{figures/gd_user_management.png}
+%     % }
+% 	\includegraphics[width=1\linewidth]{figures/gd_user_management.png}
+% 	\caption{Giao diện quản lý người dùng của hệ thống.}
+% 	\label{fig:RelationalDatabaseDiagram}
+% \end{figure}
+
+% \FloatBarrier
+
+
+
+
+
+
+
+
+% \subsection{Quản lý token}
+
+% Tính năng quản lý token (Token Management) của ServeFlow cho phép người dùng tạo và quản lý các token truy cập vào hệ thống. Token là một chuỗi ký tự duy nhất được sử dụng để xác thực và phân quyền truy cập vào các tài nguyên trong hệ thống. Các token được sinh tự động, ngẫu nhiên, chỉ hiển thị lần đầu tiên khi tạo. Sau khi tạo xong, hệ thống sẽ lưu lại thông tin của token vào cơ sở dữ liệu để có thể quản lý và xác thực.
+
+% \begin{figure} [!htb]
+% 	\centering
+% 	% \rotatebox{90}{
+%     %     \includegraphics[width=1.5\linewidth]{figures/gd_user_management.png}
+%     % }
+% 	\includegraphics[width=1\linewidth]{figures/gd_user_management.png}
+% 	\caption{Giao diện quản lý người dùng của hệ thống.}
+% 	\label{fig:RelationalDatabaseDiagram}
+% \end{figure}
+
+% \FloatBarrier
+
+
+
+
+
+
+
+
+% \subsection{Quản lý cụm Kubernetes}
+
+% Một trong những điểm đặc biệt của ServeFlow so với các giải pháp hiện tại là khả năng quản lý nhiều cụm k8s thay vì cố định trên một nền tảng. Khả năng này cho phép người dùng linh hoạt triển khai mô hình học máy trên cả môi trường tại chỗ (on-premise) và trên các nền tảng đám mây (cloud-based). Người dùng có thể đăng ký các cụm Kubernetes tự triển khai trên server của doanh nghiệp hoặc từ nhiều nhà cung cấp cả trong nước lẫn quốc tế như FPT Cloud, Microsoft Azure, Google Cloud.
+
+% Để thêm một cụm mới vào hệ thống, người dùng nhấn nút Register Cluster trên giao diện. Hệ thống sẽ yêu cầu người dùng cung cấp nội dung tệp kubeconfig tương ứng với cụm Kubernetes muốn kết nối. Sau khi xác thực thành công, cụm sẽ được thêm vào danh sách và trạng thái kết nối sẽ hiển thị là \textit{Connected}.
+
+
+% \begin{figure} [!htb]
+% 	\centering
+% 	% \rotatebox{90}{
+%     %     \includegraphics[width=1.5\linewidth]{figures/image14.png}
+%     % }
+% 	\includegraphics[width=1\linewidth]{figures/gd_cluster.png}
+% 	\caption{Giao diện tính năng quản lý cụm Kubernetes của hệ thống.}
+% 	\label{fig:RelationalDatabaseDiagram}
+% \end{figure}
+
+% \FloatBarrier
+
+
+% \subsection{Quản lý triển khai}
+
+% Tính năng quan trọng nhất của hệ thống chính là quản lý triển khai mô hình học máy. ServeFlow cung cấp giao diện trực quan để người dùng dễ dàng tạo mới và quản lý các deployment trên các cụm Kubernetes đã kết nối.
+
+% Để tạo một deployment mới, người dùng nhấn vào nút vào Create Deployment và thao tác bốn bước chính:
+
+% \renewcommand{\labelitemi}{$-$}
+% \begin{itemize}
+%     \item \textit{Cài đặt mô hình (model settings)}: người dùng cấu hình các thông tin như tên, mô tả deployment, thông tin model, thông tin image triển khai và lựa chọn cụm mà sẽ triển khai deployment lên.
+%     \item \textit{Cài đặt deployment (deployment settings)}: Người dùng cấu hình các thông tin của deployment chạy trên cụm kubernetes như lượng tài nguyên (CPU, RAM, GPU), số lượng bản sao (replica), các biến môi trường (environment variable), lệnh khởi động (startup command),...
+%     \item \textit{Cài đặt truy cập (traffic settings)}: Người dùng cấu hình cài đặt truy cập như loại traffic trong Kubernetes, các cổng (port) được mở,...
+%     \item \textit{Kiểm tra lại thông tin (review)}: Người dùng rà soát lại các thông tin triển khai deployment.
+% \end{itemize} 
+% \vspace{0.3cm}
+
+
+
+% \begin{figure} [!htb]
+% 	\centering
+% 	% \rotatebox{90}{
+%     %     \includegraphics[width=1\linewidth]{figures/gd_create_deployment2.png}
+%     % }
+% 	\includegraphics[width=1\linewidth]{figures/gd_create_deployment2.png}
+% 	\caption{Giao diện tạo deployment mới của hệ thống.}
+% 	\label{fig:RelationalDatabaseDiagram}
+% \end{figure}
+
+% \FloatBarrier
+
+
+% Sau khi người dùng đã tạo deployment thành công, hệ thống sẽ chuyển hướng đến giao diện danh sách các deployment đang triển khai. Tại đây, người dùng có thể xem được thông tin tổng quan của các deployment như trạng thái deployment hay lượng tài nguyên sử dụng.
+
+% \begin{figure} [!htb]
+% 	\centering
+% 	% \rotatebox{90}{
+%     %     \includegraphics[width=1\linewidth]{figures/gd_deployment_list.png}
+%     % }
+% 	\includegraphics[width=1\linewidth]{figures/gd_deployment_list.png}
+% 	\caption{Giao diện danh sách deployment của hệ thống.}
+% 	\label{fig:RelationalDatabaseDiagram}
+% \end{figure}
+
+% \FloatBarrier
+
+% Người dùng có thể nhấn vào một triển khai bất kỳ để xem thông tin chi tiết của triển khai này và nhấn vào nút Edit Deployment khi muốn cập nhật thông tin, cấu hình của triển khai này.
+
+
+% \begin{figure} [!htb]
+% 	\centering
+% 	% \rotatebox{90}{
+%     %     \includegraphics[width=1.5\linewidth]{figures/gd_deployment_detail.png}
+%     % }
+% 	\includegraphics[width=1\linewidth]{figures/gd_deployment_detail.png}
+
+% 	\caption{Giao diện xem chi tiết một deployment của hệ thống.}
+% 	\label{fig:RelationalDatabaseDiagram}
+% \end{figure}
+
+% \FloatBarrier
+
+
+
+
+% \subsection{Thử nghiệm thực tế qua giao diện}
+
+% Một tính năng bổ sung thêm so với các nền tảng triển khai mô hình mã nguồn mở phổ biến khác như Triton Inference Server, MLflow, hay Kubeflow, hệ thống ServeFlow cung cấp một giao diện thử nghiệm trực quan và đơn giản thông qua giao diện, giúp người dùng có thể tương tác với mô hình ngay trong trình duyệt mà không cần sử dụng giao diện dòng lệnh hay phải viết mã nguồn để kết nối. Để sử dụng tính năng này, người dùng thực hiện lần lượt các bước:
+
+% \renewcommand{\labelitemi}{$-$}
+% \begin{itemize}
+%     \item \textit{Lựa chọn deployment (select deployment)}: Người dùng lựa chọn đúng deployment trong danh sách các deployment đã triển khai. Lưu ý, deployment được chọn phải đang chạy, ở trạng thái Running.
+%     \item \textit{Lựa chọn phương thức thử nghiệm (select test method)}: Người dùng lựa chọn phương thức thử nghiệm. Hệ thống hiện tại đang support các phương thức cơ bản: Text to Text, Text to Image, Image to Text,,...
+%     \item \textit{Điền thông tin Endpoint URL}: Tùy vào image mà người dùng lựa chọn triển khai ở mỗi deployment, thông tin đầu ra URL sẽ khác nhau. Người dùng điền endpoint URL và port để hệ thống có thể gửi và nhận yêu cầu đúng địa chỉ.
+%     \item \textit{Thực hiện thử nghiệm trên giao diện Test Console}: Người dùng thực hiện thử nghiệm thông qua việc nhập văn bản hoặc hình ảnh đầu vào và nhận đầu ra, tùy theo phương thức thử nghiệm đã chọn của deployment.
+% \end{itemize} 
+% \vspace{0.3cm}
+
+
+
+% \begin{figure} [!htb]
+% 	\centering
+% 	% \rotatebox{90}{
+%     %     \includegraphics[width=1\linewidth]{figures/gd_live_test.png}
+%     % }
+% 	\includegraphics[width=1\linewidth]{figures/gd_live_test.png}
+
+% 	\caption{Giao diện tính năng thử nghiệm thực tế của hệ thống}
+% 	\label{fig:RelationalDatabaseDiagram}
+% \end{figure}
+
+% \FloatBarrier
+
+% % \section{Kiểm thử mô hình}
+
+% \section{So sánh với các hệ thống đã nêu ở chương 1}
+
+% Ta có bảng so sánh các tính năng của ServeFlow với các hệ thống đã nêu ở chương 1 như sau:
+
+
+
+
+% Có thể thấy rằng, ServeFlow đã kế thừa và học hỏi được các tính năng, đồng thời khắc phục được một số nhược điểm của các hệ thống hiện tại như không có giao diện người dùng, không hỗ trợ phân quyền người dùng hay không theo dõi được trạng thái của các triển khai. Hệ thống cũng có thể mở rộng và tuỳ biến tốt hơn cho các bài toán cụ thể của doanh nghiệp. Tuy nhiên, ServeFlow vẫn còn một số hạn chế như chưa hỗ trợ đầy đủ các cơ chế cấu hình tự động mở rộng và chưa tối ưu tốt các tài nguyên sử dụng như Triton Inference Server hay Kubeflow.
+
+
+
+
+
+
+
+% \vspace{1cm }
+
+% Chương 4 đã trình bày chi tiết về quá trình cài đặt và kiểm thử các tính năng trong hệ thống ServeFlow. Hệ thống đã được triển khai thành công, kết nối với các cụm Kubernetes và có thể sử dụng để triển khai và quản lý các mô hình học máy một cách dễ dàng và hiệu quả. Tuy vẫn còn một số tính năng chưa được tối ưu, các tính năng cơ bản của hệ thống đã hoạt động ổn định, đáp ứng được yêu cầu đã đề ra.
